@@ -1,8 +1,10 @@
 class Complex{
-  // prefix _ to make them private => same file scope would work
+  // prefix _ to make them private (var, methods, ctors etc) => same file scope would work
   // normal getters and setters or use get and set
   num real;
   num imaginary;
+  // static num counter = 0; // any object of this class can access it
+  // final num fin; // only defined once and cant be changed
 
   Complex(this.real, this.imaginary);
 
@@ -34,8 +36,23 @@ class Complex{
   // set real(num value) => _real = value;
   // obj.real = 1;
 
+  @override
+  Complex operator +(Complex c){
+    return Complex(this.real + c.real, this.imaginary + c.imaginary);
+  }
+
+// can not be invoked via instances but the actual class
+// no need to created an object => more like a helper
+  static Complex subtract(Complex c1, Complex c2){
+    return Complex(c1.real - c2.real, c1.imaginary - c2.imaginary); 
+  }
+
 }
 
+// inheritance => all methods of complex class, we can use or override but not the static ones => they are attached to the class
+class Some extends Complex{
+  Some(num real, num imaginary): super(real, imaginary); 
+}
 
 void main(){
   // num => parent of int and double
@@ -61,4 +78,6 @@ void main(){
   var r = Complex.real(1);
   var i = Complex.imaginary(1);
   print('$r $i');
+
+  Complex.subtract(obj, obj);
 }
